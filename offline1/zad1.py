@@ -61,41 +61,44 @@ def mergesort(p):
 def SortH(p, k):
     start = Node()
     start.next = p
+    rest = False
     for _ in range(k):
         p = p.next
-    to_put = p.next
-    p.next = None
-    res = mergesort(start.next)
-    tail = res
+    if p is not None:
+        to_put = p.next
+        p.next = None
+        rest = True
+    start.next = mergesort(start.next)
+    tail = start
     while tail.next is not None:
         tail = tail.next
     k_start = start
 
     # mamy juz postortowane k pierwszych
+    if rest:
+        while to_put.next is not None:
 
-    while to_put.next is not None:
+            tmp_to_put = to_put.next
+            tmp_k_start = k_start
+            put_in_last_k(k_start,to_put)
 
-        tmp_to_put = to_put.next
-        tmp_k_start = k_start
-        while k_start.next is not None:
-            if k_start.next.val >= to_put.val:
-                to_put.next = k_start.next
-                k_start.next = to_put
-                break
-            k_start = k_start.next
-        else:
-            k_start.next = to_put
-            k_start.next.next = None
+            k_start = tmp_k_start.next
+            to_put = tmp_to_put
 
-        k_start = tmp_k_start.next
-        to_put = tmp_to_put
+        put_in_last_k(k_start, to_put)
     return start.next
 
-
-
-
-
+def put_in_last_k(k_start,to_put):
+    while k_start.next is not None:
+        if k_start.next.val >= to_put.val:
+            to_put.next = k_start.next
+            k_start.next = to_put
+            break
+        k_start = k_start.next
+    else:
+        k_start.next = to_put
+        k_start.next.next = None
 
 
 # zmien all_tests na True zeby uruchomic wszystkie testy
-runtests(SortH, all_tests=False)
+runtests(SortH, all_tests=True)

@@ -1,3 +1,9 @@
+"""
+Paweł Czajczyk
+algorytm na początku wybiera k pierwszych wyrazów i je sortuje mergesortem, jeśli zostaną jeszcze jakies liczby
+to po kolei bierze każda i przyrównuje z k końcowymi wyrazami posortowanej juz listy
+Złożoność: k*logk+(n-k)*k
+"""
 from zad1testy import Node, runtests
 
 
@@ -61,34 +67,41 @@ def mergesort(p):
 def SortH(p, k):
     start = Node()
     start.next = p
-    rest = False
     for _ in range(k):
         p = p.next
-    if p is not None:
-        to_put = p.next
-        p.next = None
-        rest = True
+    rest, to_put = cut_rest(p)
     start.next = mergesort(start.next)
-    tail = start
-    while tail.next is not None:
-        tail = tail.next
     k_start = start
 
     # mamy juz postortowane k pierwszych
     if rest:
-        while to_put.next is not None:
-
-            tmp_to_put = to_put.next
-            tmp_k_start = k_start
-            put_in_last_k(k_start,to_put)
-
-            k_start = tmp_k_start.next
-            to_put = tmp_to_put
-
-        put_in_last_k(k_start, to_put)
+        sort_rest(to_put, k_start)
     return start.next
 
-def put_in_last_k(k_start,to_put):
+
+def cut_rest(p):
+    rest = False
+    to_put = None
+    if p is not None:
+        to_put = p.next
+        p.next = None
+        rest = True
+    return rest, to_put
+
+
+def sort_rest(to_put, k_start):
+    while to_put.next is not None:
+        tmp_to_put = to_put.next
+        tmp_k_start = k_start
+        put_in_last_k(k_start, to_put)
+
+        k_start = tmp_k_start.next
+        to_put = tmp_to_put
+
+    put_in_last_k(k_start, to_put)
+
+
+def put_in_last_k(k_start, to_put):
     while k_start.next is not None:
         if k_start.next.val >= to_put.val:
             to_put.next = k_start.next

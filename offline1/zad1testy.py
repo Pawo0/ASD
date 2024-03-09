@@ -88,6 +88,14 @@ def check( hint, sol ):
 def gentest(k, n, maxint):
     l = [MY_random() % maxint for i in range(n)]
     l = sorted(l)
+    c = 0
+    for i in range(1, n):
+        if l[i-1] == l[i]+c:
+            c += 1
+        l[i] += c
+
+    hint = l.copy()
+
     pos = [i for i in range(n)]
 
     for i in range(n):
@@ -103,7 +111,6 @@ def gentest(k, n, maxint):
             pos[j] = tmp
 
     arg = (tab2list(l), k)
-    hint = sorted(l)
     return arg, hint
 
 def generate_tests(num_tests = None):

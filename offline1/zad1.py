@@ -64,21 +64,6 @@ def mergesort(p):
     return p
 
 
-def SortH(p, k):
-    start = Node()
-    start.next = p
-    for _ in range(k):
-        p = p.next
-    rest, to_put = cut_rest(p)
-    start.next = mergesort(start.next)
-    k_start = start
-
-    # mamy juz postortowane k pierwszych
-    if rest:
-        sort_rest(to_put, k_start)
-    return start.next
-
-
 def cut_rest(p):
     rest = False
     to_put = None
@@ -111,6 +96,21 @@ def put_in_last_k(k_start, to_put):
     else:
         k_start.next = to_put
         k_start.next.next = None
+
+
+def SortH(p, k):
+    start = Node()
+    start.next = p
+    for _ in range(k):
+        p = p.next
+    rest, to_put = cut_rest(p)
+    start.next = mergesort(start.next)
+    k_start = start
+
+    # mamy juz postortowane k pierwszych
+    if rest:
+        sort_rest(to_put, k_start)
+    return start.next
 
 
 # zmien all_tests na True zeby uruchomic wszystkie testy

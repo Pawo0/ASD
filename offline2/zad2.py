@@ -34,32 +34,29 @@ def mergeSort(T):
 
 
 def partition(T, p, r):
-    q = T[r]
+    x = T[r]
     i = p - 1
     for j in range(p, r):
-        if T[j] >= q:
+        if T[j] >= x:
             i += 1
             T[i], T[j] = T[j], T[i]
-    T[i + 1], T[r] = T[r], T[i + 1]
+    T[r], T[i + 1] = T[i + 1], T[r]
     return i + 1
 
 
-def select(T, p, r, k):
-    if p == r: return T[p]
-    q = partition(T, p, r)
-    if k == q:
-        return T[q]
-    elif k < q:
-        return select(T, p, q - 1, k)
-    else:
-        return select(T, q + 1, r, k)
+def quickSort(T, p, r):
+    while p < r:
+        q = partition(T, p, r)
+        quickSort(T, p, q - 1)
+        p = q + 1
 
 
 def ksum(T: list, k, p):
     tab = T[:p]
     idx = tab.copy()
-    mergeSort(tab)
+    quickSort(tab, 0, len(tab) - 1)
     suma = tab[k - 1]
+    # res = f"{tab[k - 1]}"
     for i in range(p, len(T)):
         x = (i) % (p)
         search = idx[x]
@@ -74,7 +71,8 @@ def ksum(T: list, k, p):
                     break
         idx[x] = put
         suma += tab[k - 1]
-
+        # res += f" + {tab[k - 1]}"
+    # print(res)
     return suma
 
 

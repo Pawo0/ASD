@@ -3,7 +3,6 @@ from zad2testy import runtests
 
 class MaxHeap:
     def __str__(self):
-        # return complete_tree_string(self.tab[:self.size])
         res = ""
         for i, el in enumerate(self.tab[:self.size]):
             res += f"{i}: {el}, "
@@ -115,8 +114,9 @@ def ksum(T: list, k, p):
 
     middle = tab[k - 1]
     suma = middle[0]
+    # res = f"{middle[0]}"
     for i in range(p, len(T)):
-        x = (T[i], i)
+        # x = (T[i], i)
         # add new
         if T[i] > middle[0]:
             bigger.add((T[i], i))
@@ -127,10 +127,11 @@ def ksum(T: list, k, p):
         elif T[i] < middle[0]:
             smaller.add((T[i], i))
         elif T[i] == middle[0]:
-            smaller.add((T[i], i))
+            smaller.add(middle)
+            middle = (T[i], i)
 
         # del old
-        y = (T[i - p], i - p)
+        # y = (T[i-p], i-p)
         if T[i - p] > middle[0]:
             bigger.add(middle)
             middle = smaller.pop()
@@ -146,6 +147,8 @@ def ksum(T: list, k, p):
             pass
 
         suma += middle[0]
+        # res += f" + {middle[0]}"
+    # print(res)
     return suma
 
 

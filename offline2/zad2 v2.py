@@ -1,7 +1,71 @@
 from zad2testy import runtests
 
 
+def complete_tree_string(values):
+    if values:
+        just = 0
+        data = []
+
+        limit = 1
+        values_row = []
+        branches_row = []
+        prev_nodes = 0
+
+        for i in range(1, len(values) + 1):
+            curr_nodes = i - prev_nodes
+            val_str = str(values[i-1])
+            just = max(just, len(val_str))
+            values_row.append(val_str)
+            right_child_idx = 2 * i
+            left_child_idx = right_child_idx - 1
+            if left_child_idx < len(values):
+                branches_row.append('/')
+            if right_child_idx < len(values):
+                branches_row.append('\\')
+
+            if curr_nodes == limit:
+                prev_nodes = i
+                limit *= 2
+                data.append([values_row, branches_row])
+                values_row = []
+                branches_row = []
+
+        if values_row:
+            data.append([values_row, branches_row])
+
+        begin_sep = sep = 3 if just % 2 else 2
+        data_iter = iter(data[::-1])
+        result = [''] * (len(data) * 2 - 1)
+        result[-1] = (' ' * sep).join(val.center(just) for val in next(data_iter)[0])
+
+        # Format the tree string
+        for i, (values, branches) in enumerate(data_iter):
+            mul = 2 * i + 1
+            # Values
+            indent = (2 ** (i + 1) - 1) * (just + begin_sep) // 2
+            sep = 2 * sep + just
+            result[-(mul + 2)] = f"{' ' * indent}{(' ' * sep).join(val.center(just) for val in values)}"
+            # Branches
+            branch_indent = (3 * indent + just) // 4
+            branches_row = []
+            d_indent = indent - branch_indent
+            branches_sep = ' ' * (2 * (d_indent - 1) + just)
+            for i in range(0, len(branches), 2):
+                branches_row.append(f"{branches[i]}{branches_sep}{branches[i + 1] if i + 1 < len(branches) else ''}")
+            result[-(mul + 1)] = f"{' ' * branch_indent}{(' ' * (sep - 2 * d_indent)).join(branches_row)}"
+
+        return '\n'.join(result)
+    else:
+        return ''
+
 class MaxHeap:
+    def __str__(self):
+        # return complete_tree_string(self.tab[:self.size])
+        res = ""
+        for i, el in enumerate(self.tab[:self.size]):
+            res += f"{i}: {el}, "
+        return res[:-2]
+
     def __init__(self, max_size):
         self.max_size = max_size
         self.tab = [None] * max_size
@@ -15,9 +79,9 @@ class MaxHeap:
         max_ind = i
         l = self.left(i)
         r = self.right(i)
-        if l < n and self.tab[l] > self.tab[max_ind]:
+        if l < n and self.tab[l][0] > self.tab[max_ind][0]:
             max_ind = l
-        if r < n and self.tab[r] > self.tab[max_ind]:
+        if r < n and self.tab[r][0] > self.tab[max_ind][0]:
             max_ind = r
         if max_ind != i:
             self.tab[max_ind], self.tab[i] = self.tab[i], self.tab[max_ind]
@@ -28,10 +92,9 @@ class MaxHeap:
             self.heapify(n, i)
 
     def add(self, x):
-        self.tab[self.size] = x
-
+        self.tab.insert(0,x)
         self.size += 1
-        self.build_heap(self.size)
+        self.heapify(self.size,0)
 
     def add_tab(self, tab):
         start = self.size
@@ -54,9 +117,9 @@ class MinHeap(MaxHeap):
         max_ind = i
         l = self.left(i)
         r = self.right(i)
-        if l < n and self.tab[l] < self.tab[max_ind]:
+        if l < n and self.tab[l][0] < self.tab[max_ind][0]:
             max_ind = l
-        if r < n and self.tab[r] < self.tab[max_ind]:
+        if r < n and self.tab[r][0] < self.tab[max_ind][0]:
             max_ind = r
         if max_ind != i:
             self.tab[max_ind], self.tab[i] = self.tab[i], self.tab[max_ind]
@@ -64,14 +127,14 @@ class MinHeap(MaxHeap):
 
 
 def partition(T, p, r):
-    x = T[r]
-    i = p - 1
+    x = T[r][0]
+    i = p
     for j in range(p, r):
-        if T[j] >= x:
-            i += 1
+        if T[j][0] >= x:
             T[i], T[j] = T[j], T[i]
-    T[r], T[i + 1] = T[i + 1], T[r]
-    return i + 1
+            i += 1
+    T[r], T[i] = T[i], T[r]
+    return i
 
 
 def quickSort(T, p, r):
@@ -84,7 +147,9 @@ def quickSort(T, p, r):
 def ksum(T: list, k, p):
     smaller = MaxHeap(len(T))
     bigger = MinHeap(len(T))
-    tab = T[:p]
+    tab = [None] * (p)
+    for i in range(p):
+        tab[i] = (T[i],i)
     quickSort(tab,0,p-1)
     big = tab[:k-1]
     small = tab[k:]
@@ -92,26 +157,36 @@ def ksum(T: list, k, p):
     smaller.add_tab(small)
 
     middle = tab[k-1]
-    suma = middle
+    suma = middle[0]
     for i in range(p,len(T)):
         # add new
-        if T[i] > middle:
-            bigger.add(T[i])
+        if T[i] > middle[0]:
+            bigger.add((T[i],i))
             smaller.add(middle)
             middle = bigger.pop()
-        elif T[i] < middle:
-            smaller.add(T[i])
-
+            while middle[1] < (i-p):
+                middle = bigger.pop()
+        elif T[i] < middle[0]:
+            smaller.add((T[i],i))
+        elif T[i] == middle[0]:
+            smaller.add((T[i],i))
         # del old
-        if T[i-p] > middle:
+        if T[i-p] > middle[0]:
             bigger.add(middle)
             middle = smaller.pop()
-        elif T[i-p] < middle:
+            while middle[1] <= (i-p):
+                middle = smaller.pop()
+        elif T[i-p] < middle[0]:
+            pass
+        elif T[i-p] == middle[0] and (i-p) == middle[1]:
+            middle = smaller.pop()
+            while middle[1] <= (i-p):
+                middle = smaller.pop()
+        elif T[i-p] == middle[0]:
             pass
 
 
-        suma += middle
-
+        suma += middle[0]
     return suma
 
 # zmien all_tests na True zeby uruchomic wszystkie testy

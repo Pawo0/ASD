@@ -1,0 +1,13 @@
+1. sort tablicy z {0,....,n^2-1} w O(n)
+2. tablica A[n] zawierajaca wartosci ze zbioru B, ||B|| -logn
+    w O(n*log(log(n)))
+3. Słowa A i B ||A|| = ||B|| = n sprawdz czy anagramy
+a) O(n+k)
+b) O(n)
+4. A[n] wartosci parami róznych szukamy x,y nal do A[n] takich ze (y-x) jak najwieksza
+    i nie istnieje z nal. do A[n]: y>z>x   // bucket sort i porownujemy miedzy wiadereczkami
+5. Sortowanie n słow w czasie ~sumy ich dlugosci
+6. Minimalne pokrycie:
+lista A[n] wart {0,....,k-1}
+znajdz i,j takie ze A[i:j+1] zawiera wszystkie k wartosci i (j-i) jest minimalne
+    O(n)

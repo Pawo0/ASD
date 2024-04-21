@@ -2,6 +2,28 @@ from zad4testy import runtests
 
 
 def Flight(L, x, y, t):
+    def bfs(curr, vis):
+        vis[curr] = True
+        q = list()
+        q_start, q_end = 0, 0
+        for el in G[curr]:
+            if el == y: return True
+            q.append(el)
+            vis[el] = True
+            q_end += 1
+        while q_start < q_end:
+            v = q[q_start]
+            q_start += 1
+            for el in G[v]:
+                if not vis[el]:
+                    if el == y: return True
+                    q.append(el)
+                    vis[el] = True
+                    q_end += 1
+        for vi in q:
+            vis[vi] = False
+        return False
+
     def dfs(curr, vis):
         if curr == y:
             return True
@@ -31,7 +53,7 @@ def Flight(L, x, y, t):
             is_y += 1 if L[j + 1][0] == y or L[j + 1][1] == y else 0
             j += 1
 
-        if is_x and is_y and dfs(x, visit):
+        if is_x and is_y and bfs(x, visit):
             return True
 
         is_x -= 1 if L[i][0] == x or L[i][1] == x else 0
@@ -48,3 +70,11 @@ def Flight(L, x, y, t):
 # zmien all_tests na True zeby uruchomic wszystkie testy
 runtests(Flight, all_tests=True)
 
+
+# L = input()
+# L = eval(L)
+# x = int(input())
+# y = int(input())
+# t = int(input())
+#
+# print(Flight(L, x, y, t))

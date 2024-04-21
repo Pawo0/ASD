@@ -1,0 +1,17 @@
+1. Funkcja sprawdzajaca czy
+a) graf jest dwudzielny
+b) graf ma cykl
+
+2. G nieskierowany, dany macierzowo
+Algorytm sprawdzajacy czy graf ma cykl dlugosci 4
+(lepiej n^4)
+-> szukamy "czworokonta" w macierzy alt. dla kazdych dwoch wieszkolkow szukamy dwoch puntkow (1,1)
+
+3. V jest uniwersalnym ujsciem grafu skierowanego, jesli kazdy inny wierzchołek
+ ma krawędź do V, a V nie ma zadnej uchodzącej
+G - dany macierzowo
+Nalezy sprawdzic czy G ma uniwersalne ujscie
+
+4. wyłaczyc siec nie przerywajac ciaglosci -> (czysty dfs)
+
+5. graf wazony przejsc z a do b, mozemy przechodzic tylko po rosnacych krawedziach

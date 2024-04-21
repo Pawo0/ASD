@@ -29,6 +29,19 @@ def check( hint, sol ):
 
 def generate_tests(num_tests = None):
     global TEST_SPEC
+    # positive_results = [
+    #     605, 616, 618, 634, 643, 651, 666, 687, 726, 727, 764, 774, 781, 801,
+    #     838, 844, 857, 891, 900, 923, 950, 957, 958, 963, 1071, 1081, 1083, 1092, 1093,
+    #     1127, 1151, 1184, 1205, 1252, 1255, 1273, 1323, 1338, 1367, 1394, 1401, 1419, 1465, 1485, 1493
+    # ]
+    # shitlist = [768, 1024, 1280]
+    # for i in range(600, 1500):
+    #     if i not in shitlist:
+    #         TEST_SPEC.append((i, [], i in positive_results))
+
+    # positive_results = [605, 616, 618, 634, 643, 651, 666, 687, 726, 727, 764]
+    # for i in range(600, 768):
+    #     TEST_SPEC.append((i, [], i in positive_results))
     TESTS = []
 
     if num_tests is not None:

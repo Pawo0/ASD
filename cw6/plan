@@ -1,0 +1,18 @@
+1. znajdz cykl Eulera w grafie zadanym macierzowo
+
+2. Dobry początek - wierzchołek z ktorego mozna osiagnac kazdy inny w grafie skierowanym
+Znajdz go
+-> znajdowanie spojnych skladowych i dobry wierzcholek jest w tym do ktorego nie wchodzi zaden inny
+
+3. G = (V, E) graf nieskierowany
+s,t nalezy do V
+znajdz o ile istnieje taka krawędź której usuniecie wydłuża najkrótsza scieżkę z s do t
+
+4. Sciezka Hamiltona to sciezka przylegajaca przez wszystkie wierzchołki grafu
+Zaproponuj algorytm stwierdzajacy czy graf ma sciezke
+-> znajdujemynajdluzsza sciezke i usuwamy po kolei kazda kolejna krawedz z niej
+O((V+E)E) = O(E^2) -> O(V^4)
+O(V+E) - wzorcowka
+
+
+

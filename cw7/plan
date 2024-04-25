@@ -1,0 +1,22 @@
+1. Dijkstra dla reprezentacji macierzowej
+(brak krawedzi - inf)
+
+2. Algorytm B-F dla repr. listowej
+
+3. Alg wypisujacy najwieksza sciezke do zad wierzchołka na podstawie tablicy parent
+
+4. Zaproponuj alg znajdujacy najkrotsze sciezki z zadanego wierzchołka w DAGu (acykliczny graf skierowany)
+-> na poczatek sortowanie topologiczne
+-> przechodzimy po kazdym i robimy relaksacje
+
+
+5. alg znajdujacy sciezke z s do t o minimalnym iloczynie wag krawedzi
+-> zameniamy na logarytmy i z wl log szukamy najmniejszej sumy np Dijkstra
+
+6. krawedzie maja wagi ze zbioru {1, ..., |E|} parami rozne
+szukamy najkrotszej sciezki z s do t po krawedziach o malejacych wagach
+-> liniowo sortujesz coutingiem
+przechodzimy, jesli przynajmniej jeden z wierzcholkow w visited ozemy wykorzystac
+
+7. Alicja i Bob jada z miasta s do t. jezdza na zmiane, znajdz trasa z minimalna droga alicji
+-> co druga droge jedzie bob, z kosztem 0, osobne visited. ładujemy dijkstre

@@ -1,10 +1,49 @@
 from zad5testy import runtests
+from queue import PriorityQueue
 
 
 def spacetravel(n, E, S, a, b):
-    # tu prosze wpisac wlasna implementacje
+    G = [[] for _ in range(n + 1)]
+    for fr, to, wag in E:
+        G[fr].append((wag, to))
+        G[to].append((wag, fr))
+    for i in S:
+        G[n].append((0, i))
+        G[i].append((0, n))
+
+    d = [float("inf") for _ in range(n + 1)]
+    q = PriorityQueue()
+    d[a] = 0
+    q.put((0, a))
+    while not q.empty():
+        dl, u = q.get()
+        if u == b:
+            return dl
+        for dl2, v in G[u]:
+            if d[v] > dl + dl2:
+                d[v] = dl + dl2
+                q.put((d[v], v))
     return None
 
 
 # zmien all_tests na True zeby uruchomic wszystkie testy
-runtests(spacetravel, all_tests=True)
+# runtests(spacetravel, all_tests=True)
+
+
+L = input()
+L = eval(L)
+S = input()
+S = eval(S)
+x = int(input())
+y = int(input())
+n = int(input())
+print(spacetravel(n, L, S, x, y))
+
+# for((i=0; i<10000; i++))
+#     do
+#     start=$(date +%s%N);
+#     python3 zad5.py <testy/in/$i.in >my.out;
+#     end=$(date +%s%N);
+#     echo "$i $(($(($end-$start))/1000000)) ms";
+#     diff my.out testy/out/$i.out || ( echo $i ) >> error.log;
+# done

@@ -1,0 +1,7 @@
+1. dostajemy tablice n liczba naturalnych i "t"
+Podciag z A ktory sumuje sie do zadanej wartosci t
+
+2. 2 tablice o dlugosci n, (LCS)
+najdluzszy wspolny podciag rosnacy
+
+3. jak wykorzystac algorytm z zadania 2 (do LIS-a?)

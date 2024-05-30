@@ -10,7 +10,7 @@ def dijkstra(G,s):
         mini = inf
         u = inf
         for e in range(n):
-            if e < mini and not visited[e]:
+            if d[e] < mini and not visited[e]:
                 mini = d[e]
                 u = e
         if u == inf:

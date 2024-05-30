@@ -27,23 +27,4 @@ def spacetravel(n, E, S, a, b):
 
 
 # zmien all_tests na True zeby uruchomic wszystkie testy
-# runtests(spacetravel, all_tests=True)
-
-
-L = input()
-L = eval(L)
-S = input()
-S = eval(S)
-x = int(input())
-y = int(input())
-n = int(input())
-print(spacetravel(n, L, S, x, y))
-
-# for((i=0; i<10000; i++))
-#     do
-#     start=$(date +%s%N);
-#     python3 zad5.py <testy/in/$i.in >my.out;
-#     end=$(date +%s%N);
-#     echo "$i $(($(($end-$start))/1000000)) ms";
-#     diff my.out testy/out/$i.out || ( echo $i ) >> error.log;
-# done
+runtests(spacetravel, all_tests=True)

@@ -10,14 +10,31 @@ class Node:
     def __repr__(self):
         return self.print_list()
 
-    def print_list(self):
-        """printing list lol"""
-        p = self
+    def is_cycle(self) -> bool:
+        w = self
+        z = self
+        while w.next is not None and w.next.next is not None:
+            w = w.next.next
+            z = z.next
+            if w == z:
+                return True
+        return False
+
+    def print_list(self, n=20):
         res = ""
-        while p is not None:
-            res = f"{res}{p.val} -> "
-            p = p.next
-        res = res + " END"
+        if self.is_cycle():
+            res += "CYCLE: "
+            p = self
+            for i in range(n):
+                res += f"{p.val} -> "
+                p = p.next
+            res += "END"
+        else:
+            p = self
+            while p is not None:
+                res = f"{res}{p.val} -> "
+                p = p.next
+            res = res + "END"
         return res
 
 

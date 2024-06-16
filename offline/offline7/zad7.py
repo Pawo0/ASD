@@ -30,7 +30,7 @@ def maze(L):
                     m = max(f[x + 1][y][1], f[x + 1][y][0])
                     if m != -1:
                         f[x][y][0] = m + 1
-    return max(f[n - 1][n - 1][0], f[n - 1][n - 1][1], f[n - 1][n - 1][2])
+    return max(f[n - 1][n - 1][i] for i in range(3))
 
 
 # zmien all_tests na True zeby uruchomic wszystkie testy

@@ -9,11 +9,6 @@ def trip(M):
         for j in range(m):
             if f[i][j] == -1:
                 dfs(M, f, i, j)
-    # res = 0
-    # for row in f:
-    #     m = max(row)
-    #     res = max(m,res)
-    # return res
     return max(max(f[i]) for i in range(n))
 
 
